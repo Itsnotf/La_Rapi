@@ -74,7 +74,7 @@ export default function BahanBakuIndex({ bahanBakus, flash }: Props) {
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="flex items-center justify-between">
                     <h1 className="text-xl font-semibold">Bahan Baku</h1>
-                    {can('create-user', auth) && (
+                    {can('create-items', auth) && (
                         <Link href="/items/create">
                             <Button className="bg-primary">Tambah Bahan Baku</Button>
                         </Link>
