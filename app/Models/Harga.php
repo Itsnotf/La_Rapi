@@ -9,6 +9,7 @@ class Harga extends Model
     protected $fillable = [
         'bahan_baku_id',
         'harga',
+        'pasar',
         'tanggal',
         'created_by',
     ];

@@ -190,16 +190,14 @@ class BahanBakuController extends Controller
     public function storeHarga(Request $request)
     {
 
+
         $validated = $request->validate([
             'bahan_baku_id' => 'required|exists:bahan_bakus,id',
             'harga' => 'required|numeric|min:0',
             'pasar' => 'required',
         ]);
 
-
-
         $tanggal = now()->toDateString();
-
 
         $exists = Harga::where('bahan_baku_id', $validated['bahan_baku_id'])
             ->where('tanggal', $tanggal)
@@ -208,6 +206,8 @@ class BahanBakuController extends Controller
         if ($exists) {
             return redirect()->back()->with('error', 'Harga untuk bahan baku ini sudah tercatat hari ini.');
         }
+
+
 
         Harga::create([
             'bahan_baku_id' => $validated['bahan_baku_id'],
