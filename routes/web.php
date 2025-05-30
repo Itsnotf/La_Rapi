@@ -22,6 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     route::resource('items', BahanBakuController::class);
     route::get('items/{id}/harga', [BahanBakuController::class, 'createHarga']);
     route::post('items/{id}/harga/store', [BahanBakuController::class, 'storeHarga']);
+    route::get('items/harga/{hargaId}/edit', [BahanBakuController::class, 'editHarga']);
+    route::put('items/harga/{hargaId}/update', [BahanBakuController::class, 'updateHarga']);
     route::get('items/{id}/show', [BahanBakuController::class, 'showHarga']);
     route::get('laporan', [LaporanController::class, 'index']);
     route::post('laporan/generate', [LaporanController::class, 'store']);

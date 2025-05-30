@@ -252,6 +252,10 @@
             @endforeach
         </tbody>
     </table>
+    <div>
+        <h1 style="padding-bottom: 5px">Kesimpulan</h1>
+        <p style="text-align: justify">{{$kesimpulan}}</p>
+    </div>
 
     <div class="footer">
         Dokumen ini dicetak secara otomatis oleh Sistem Pemantauan Harga Bahan Baku Dinas Perdagangan Kabupaten

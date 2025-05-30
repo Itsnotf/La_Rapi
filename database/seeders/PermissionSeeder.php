@@ -35,6 +35,7 @@ class PermissionSeeder extends Seeder
             'download-laporan',
             'create-harga',
             'show-harga',
+            'edit-harga',
         ];
 
         foreach ($permissions as $permission) {

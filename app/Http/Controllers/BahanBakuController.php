@@ -190,7 +190,6 @@ class BahanBakuController extends Controller
     public function storeHarga(Request $request)
     {
 
-
         $validated = $request->validate([
             'bahan_baku_id' => 'required|exists:bahan_bakus,id',
             'harga' => 'required|numeric|min:0',
@@ -232,6 +231,8 @@ class BahanBakuController extends Controller
                         ->orderBy('tanggal', 'desc')
                         ->paginate(10);
 
+                        // dd($hargas);
+
         return Inertia::render('bahanBaku/show', [
             'bahanBaku' => $bahanBaku,
             'hargas' => $hargas->items(),
@@ -240,6 +241,30 @@ class BahanBakuController extends Controller
             'currentPage' => $hargas->currentPage(),
             'lastPage' => $hargas->lastPage(),
         ]);
+    }
+
+    public function editHarga(string $hargaId)
+    {
+        $harga = Harga::find($hargaId);
+
+        return inertia('bahanBaku/editHarga', [
+            'harga' => $harga,
+        ]);
+    }
+
+    public function updateHarga(Request $request, string $hargaId)
+    {
+        $validated = $request->validate([
+            'harga' => 'required|numeric|min:0',
+        ]);
+
+        $harga = Harga::where('id', $hargaId)
+            ->first();
+
+        $harga->harga = $validated['harga'];
+        $harga->save();
+
+        return redirect()->route('items.index')->with('success', 'Harga berhasil diperbarui.');
     }
 
 

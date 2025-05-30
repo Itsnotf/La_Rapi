@@ -11,6 +11,7 @@ class Laporan extends Model
 
     protected $fillable = [
         'judul',
+        'laporan',
         'tanggal_mulai',
         'tanggal_selesai',
         'file_path',

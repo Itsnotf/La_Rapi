@@ -10,10 +10,13 @@ import {
 } from '@/components/ui/pagination';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
-import { Head, Link, router } from '@inertiajs/react';
+import { can } from '@/utils/permission';
+import { Head, Link, router, usePage } from '@inertiajs/react';
+import { z } from 'zod';
 
 interface Harga {
     id: number;
+    bahan_baku_id: number;
     harga: string;
     tanggal: string;
     pasar: string;
@@ -33,12 +36,25 @@ interface Props {
     perPage: number;
 }
 
-export default function ShowHarga({ bahanBaku, hargas, currentPage, lastPage, perPage }: Props) {
+const formSchema = z.object({
+    harga: z.string().min(1, 'Harga bahan baku wajib diisi'),
+});
+
+export default function ShowHarga({ bahanBaku, hargas, currentPage, lastPage }: Props) {
     const handlePageChange = (page: number) => {
         if (page >= 1 && page <= lastPage) {
             router.visit(`?page=${page}`);
         }
     };
+
+        const page = usePage().props as {
+            auth?: {
+                permissions: string[];
+                roles?: string[];
+            };
+        };
+
+        const auth = page.auth ?? { permissions: [] };
 
     const pageNumbersToShow = 3;
 
@@ -82,6 +98,7 @@ export default function ShowHarga({ bahanBaku, hargas, currentPage, lastPage, pe
                             <TableHead>Pasar</TableHead>
                             <TableHead>Harga</TableHead>
                             <TableHead>Tanggal</TableHead>
+                            <TableHead>Action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -98,6 +115,14 @@ export default function ShowHarga({ bahanBaku, hargas, currentPage, lastPage, pe
                                     <TableCell>{harga.pasar}</TableCell>
                                     <TableCell>Rp {parseInt(harga.harga).toLocaleString('id-ID')}</TableCell>
                                     <TableCell>{new Date(harga.tanggal).toLocaleDateString('id-ID')}</TableCell>
+                                    <TableCell>
+                                         {can('edit-harga', auth) && (
+                                             <Link href={`/items/harga/${harga.id}/edit`}>
+                                            <Button>Edit</Button>
+                                        </Link>
+                                        )}
+
+                                    </TableCell>
                                 </TableRow>
                             ))
                         )}

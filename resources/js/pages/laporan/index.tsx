@@ -18,6 +18,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface Laporan {
     id: number;
     judul: string;
+    kesimpulan: string;
     tanggal_mulai: string;
     tanggal_selesai: string;
     file_path: string;
@@ -47,6 +48,7 @@ export default function LaporanIndex({ laporans, flash }: Props) {
 
     const { data, setData, post, processing, reset, errors } = useForm({
         judul: '',
+        kesimpulan: '',
     });
 
     const handleDelete = (id: number) => {
@@ -139,6 +141,19 @@ export default function LaporanIndex({ laporans, flash }: Props) {
                                 className="w-full rounded border px-3 py-2 text-sm"
                             />
                             {errors.judul && <p className="text-sm text-red-500">{errors.judul}</p>}
+                        </div>
+                        <div className="mt-4 space-y-2">
+                            <label htmlFor="kesimpulan" className="block text-sm font-medium">
+                                Kesimpulan
+                            </label>
+                            <textarea
+                                id="kesimpulan"
+                                value={data.kesimpulan}
+                                onChange={(e) => setData('kesimpulan', e.target.value)}
+                                className="w-full rounded border px-3 py-2 text-sm"
+                            />
+                            {errors.judul && <p className="text-sm text-red-500">{errors.judul}</p>}
+                            {errors.kesimpulan && <p className="text-sm text-red-500">{errors.kesimpulan}</p>}
                         </div>
                         <DialogFooter>
                             <Button variant="outline" onClick={() => setGenerateDialogOpen(false)}>

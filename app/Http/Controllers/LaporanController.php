@@ -39,6 +39,7 @@ class LaporanController extends Controller
     {
         $request->validate([
             'judul' => 'required|string|max:255',
+            'kesimpulan' => 'required|string',
         ]);
 
         $months = [
@@ -93,6 +94,7 @@ class LaporanController extends Controller
             'laporanData' => $formattedLaporanData,
             'nama_bulan' => $namaBulan,
             'pasars' => $uniquePasars,
+            'kesimpulan' => $request->kesimpulan,
         ]);
 
         $filename = 'laporan_' . now()->format('Ymd_His') . '.pdf';
@@ -101,6 +103,7 @@ class LaporanController extends Controller
 
         $laporan = Laporan::create([
             'judul' => $request->judul,
+            'kesimpulan' => $request->kesimpulan,
             'tanggal_mulai' => $months[2]->startOfMonth(),
             'tanggal_selesai' => $months[0]->endOfMonth(),
             'file_path' => $path,
